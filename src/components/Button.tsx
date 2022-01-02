@@ -14,11 +14,12 @@ const Button: React.FC<IProps> = ({ note }) => {
     const slug = note.title.toLowerCase().replace(/\s/g, '-') + '-' + id;
     const data = {
       ...note,
+      content: note.content.replace(/\n/g, '<br />'),
       createdAt: Timestamp.now(),
     };
 
     await setDoc(doc(db, 'notes', slug), data);
-    window.location.href = '/';
+    window.location.href = '/' + slug;
   };
 
   return (
