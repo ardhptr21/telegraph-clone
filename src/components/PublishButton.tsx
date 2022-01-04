@@ -1,13 +1,15 @@
 import { doc, setDoc, Timestamp } from '@firebase/firestore';
 import React from 'react';
-import { IState as IAppState } from '../App';
+import { IState as ICreateState } from '../pages/Create';
 import { db } from '../config/firebaseConfig';
-
+import { useNavigate } from 'react-router-dom';
 interface IProps {
-  note: IAppState['note'];
+  note: ICreateState['note'];
 }
 
 const Button: React.FC<IProps> = ({ note }) => {
+  const navigate = useNavigate();
+
   const handlePublish = async (): Promise<any> => {
     // generate random string
     const id = Math.random().toString(36).slice(2, 9);
@@ -19,7 +21,7 @@ const Button: React.FC<IProps> = ({ note }) => {
     };
 
     await setDoc(doc(db, 'notes', slug), data);
-    window.location.href = '/' + slug;
+    navigate('/', { replace: true });
   };
 
   return (

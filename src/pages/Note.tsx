@@ -1,11 +1,12 @@
 import { doc, getDoc } from '@firebase/firestore';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { IState as IAppState } from '../App';
+import { IState as ICreateState } from './Create';
 import { db } from '../config/firebaseConfig';
+import parseFirebaseTimestamp from '../utils/parseFirebaseTimestamp';
 
 interface IState {
-  note: IAppState['note'];
+  note: ICreateState['note'];
   date: string;
 }
 
@@ -18,6 +19,7 @@ const Note = () => {
 
   useEffect(() => {
     getNoteData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getNoteData = async (): Promise<any> => {
@@ -31,13 +33,7 @@ const Note = () => {
         author: note.author,
         content: note.content,
       });
-      setDate(
-        note.createdAt.toDate().toLocaleString('en-US', {
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric',
-        })
-      );
+      setDate(parseFirebaseTimestamp(note.createdAt));
     } else {
       window.location.href = '/';
     }

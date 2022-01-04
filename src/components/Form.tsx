@@ -1,11 +1,11 @@
 import React, { ChangeEvent } from 'react';
 import Input from './Input';
 import Textarea from './Textarea';
-import { IState as IAppState } from '../App';
+import { IState as ICreateState } from '../pages/Create';
 
 interface IProps {
-  note: IAppState['note'];
-  setNote: React.Dispatch<React.SetStateAction<IAppState['note']>>;
+  note: ICreateState['note'];
+  setNote: React.Dispatch<React.SetStateAction<ICreateState['note']>>;
 }
 
 const Form: React.FC<IProps> = ({ note, setNote }) => {
